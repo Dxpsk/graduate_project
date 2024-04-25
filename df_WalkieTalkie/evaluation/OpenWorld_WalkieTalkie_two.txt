@@ -1,0 +1,120 @@
+two-*:
+threshold_val: 0.10874906186625444
+TP: 8279, FP: 15332, TN: 4668, FN: 721
+TPR:0.9198888888888889, FPR:0.7666, Precision: 0.3506416500783533, Recall:0.9198888888888889
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.35328298736360164
+TP: 7766, FP: 14281, TN: 5719, FN: 1234
+TPR:0.8628888888888889, FPR:0.71405, Precision: 0.35224747131128953, Recall:0.8628888888888889
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.5307237540651162
+TP: 6668, FP: 12117, TN: 7883, FN: 2332
+TPR:0.7408888888888889, FPR:0.60585, Precision: 0.3549640670747937, Recall:0.7408888888888889
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.6594798177629646
+TP: 5823, FP: 10555, TN: 9445, FN: 3177
+TPR:0.647, FPR:0.52775, Precision: 0.3555379167175479, Recall:0.647
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.7529088772014396
+TP: 5197, FP: 9480, TN: 10520, FN: 3803
+TPR:0.5774444444444444, FPR:0.474, Precision: 0.3540914355794781, Recall:0.5774444444444444
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.8207036582537898
+TP: 4635, FP: 8578, TN: 11422, FN: 4365
+TPR:0.515, FPR:0.4289, Precision: 0.35079088776205253, Recall:0.515
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.8698974783089168
+TP: 4104, FP: 7744, TN: 12256, FN: 4896
+TPR:0.456, FPR:0.3872, Precision: 0.3463875759621877, Recall:0.456
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9055939123714077
+TP: 3635, FP: 6976, TN: 13024, FN: 5365
+TPR:0.4038888888888889, FPR:0.3488, Precision: 0.34256903213646217, Recall:0.4038888888888889
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9314962595229367
+TP: 3180, FP: 6203, TN: 13797, FN: 5820
+TPR:0.35333333333333333, FPR:0.31015, Precision: 0.33891079612064373, Recall:0.35333333333333333
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9502917388356261
+TP: 2730, FP: 5420, TN: 14580, FN: 6270
+TPR:0.30333333333333334, FPR:0.271, Precision: 0.33496932515337424, Recall:0.30333333333333334
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.963930272846737
+TP: 2325, FP: 4667, TN: 15333, FN: 6675
+TPR:0.25833333333333336, FPR:0.23335, Precision: 0.3325228832951945, Recall:0.25833333333333336
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9738267807717386
+TP: 1939, FP: 3913, TN: 16087, FN: 7061
+TPR:0.21544444444444444, FPR:0.19565, Precision: 0.33133971291866027, Recall:0.21544444444444444
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9810079682094667
+TP: 1568, FP: 3207, TN: 16793, FN: 7432
+TPR:0.17422222222222222, FPR:0.16035, Precision: 0.32837696335078537, Recall:0.17422222222222222
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.9862188419243761
+TP: 1239, FP: 2600, TN: 17400, FN: 7761
+TPR:0.13766666666666666, FPR:0.13, Precision: 0.32274029695233136, Recall:0.13766666666666666
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
+two-*:
+threshold_val: 0.99
+TP: 951, FP: 1993, TN: 18007, FN: 8049
+TPR:0.10566666666666667, FPR:0.09965, Precision: 0.32302989130434784, Recall:0.10566666666666667
+test_acc:
+mon_correct: 6119  unmon_correct: 4668
+mon_num: 9000   unmon_num: 20000
+Test Accuracy: 0.37196551724137933
