@@ -3,7 +3,6 @@ import numpy as np
 import const_rf as const
 import multiprocessing as mp
 import pandas as pd
-from importlib import import_module
 import tqdm
 from packets_per_slot import fun as fun
 
@@ -74,8 +73,8 @@ if __name__ == '__main__':
 
     # feature_func = 'packets_per_slot'
 
-    train_name = '/home/xjj/projects/graduate_project/RF/RF/list/Index_train.txt'
-    test_name = '/home/xjj/projects/graduate_project/RF/RF/list/Index_test.txt'
+    train_name = '/home/xjj/projects/graduate_project/RF_no_def/list/Index_train.txt'
+    test_name = '/home/xjj/projects/graduate_project/RF_no_def/list/Index_test.txt'
 
     process_dataset(train_name, 'train')
     process_dataset(test_name, 'test')
