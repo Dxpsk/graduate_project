@@ -2,7 +2,7 @@ from os.path import join, abspath, dirname, pardir
 BASE_DIR = abspath(join(dirname(__file__), pardir))
 output_dir = '/data/Deep_fingerprint/processed_RF_data/'
 split_mark = '\t'
-OPEN_WORLD = False
+OPEN_WORLD = True
 MONITORED_SITE_NUM = 95
 MONITORED_INST_NUM = 1000
 UNMONITORED_SITE_NUM = 40000
