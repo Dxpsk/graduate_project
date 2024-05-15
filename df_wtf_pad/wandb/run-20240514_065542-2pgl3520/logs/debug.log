@@ -1,0 +1,41 @@
+2024-05-14 06:55:42,557 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Current SDK version is 0.16.4
+2024-05-14 06:55:42,557 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Configure stats pid to 3255562
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Loading settings from /home/xjj/.config/wandb/settings
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Loading settings from /home/xjj/projects/graduate_project/df_wtf_pad/wandb/settings
+2024-05-14 06:55:42,558 WARNING MainThread:3255562 [wandb_setup.py:_flush():76] Unknown environment variable: WANDB_SERVICE
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'entity': 'seu_ml', 'project': 'DF_wtf_pad_CW', 'sweep_id': '52l1u7vm', 'root_dir': '/home/xjj/projects/graduate_project/df_wtf_pad', 'run_id': '2pgl3520', 'sweep_param_path': '/home/xjj/projects/graduate_project/df_wtf_pad/wandb/sweep-52l1u7vm/config-2pgl3520.yaml'}
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'df_wtf_pad/wtf_pad_close_world_train.py', 'program_abspath': '/home/xjj/projects/graduate_project/df_wtf_pad/wtf_pad_close_world_train.py', 'program': 'wtf_pad_close_world_train.py'}
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:_log_setup():526] Logging user logs to /home/xjj/projects/graduate_project/df_wtf_pad/wandb/run-20240514_065542-2pgl3520/logs/debug.log
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:_log_setup():527] Logging internal logs to /home/xjj/projects/graduate_project/df_wtf_pad/wandb/run-20240514_065542-2pgl3520/logs/debug-internal.log
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:init():566] calling init triggers
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:init():573] wandb.init called with sweep_config: {'batch_size': 64, 'betas': '0.999)', 'eps': 1e-08, 'lr': 0.004, 'num_epochs': 10, 'optimizer': 'adam', 'weight_decay': 0}
+config: {}
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:init():616] starting backend
+2024-05-14 06:55:42,558 INFO    MainThread:3255562 [wandb_init.py:init():620] setting up manager
+2024-05-14 06:55:42,562 INFO    MainThread:3255562 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-05-14 06:55:42,564 INFO    MainThread:3255562 [wandb_init.py:init():628] backend started and connected
+2024-05-14 06:55:42,571 INFO    MainThread:3255562 [wandb_run.py:_config_callback():1343] config_cb None None {'batch_size': 64, 'betas': '0.999)', 'eps': 1e-08, 'lr': 0.004, 'num_epochs': 10, 'optimizer': 'adam', 'weight_decay': 0}
+2024-05-14 06:55:42,576 INFO    MainThread:3255562 [wandb_init.py:init():720] updated telemetry
+2024-05-14 06:55:42,663 INFO    MainThread:3255562 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2024-05-14 06:55:43,381 INFO    MainThread:3255562 [wandb_run.py:_on_init():2262] communicating current version
+2024-05-14 06:55:43,674 INFO    MainThread:3255562 [wandb_run.py:_on_init():2271] got version response upgrade_message: "wandb version 0.17.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2024-05-14 06:55:43,674 INFO    MainThread:3255562 [wandb_init.py:init():804] starting run threads in backend
+2024-05-14 06:55:45,982 INFO    MainThread:3255562 [wandb_run.py:_console_start():2241] atexit reg
+2024-05-14 06:55:45,982 INFO    MainThread:3255562 [wandb_run.py:_redirect():2096] redirect: wrap_raw
+2024-05-14 06:55:45,982 INFO    MainThread:3255562 [wandb_run.py:_redirect():2161] Wrapping output streams.
+2024-05-14 06:55:45,982 INFO    MainThread:3255562 [wandb_run.py:_redirect():2186] Redirects installed.
+2024-05-14 06:55:45,983 INFO    MainThread:3255562 [wandb_init.py:init():847] run started, returning control to user process
+2024-05-14 06:55:45,983 INFO    MainThread:3255562 [pyagent.py:run():324] Starting sweep agent: entity=None, project=None, count=None
+2024-05-14 06:55:47,093 INFO    Thread-4  :3255562 [wandb_watch.py:watch():51] Watching
+2024-05-14 06:55:47,094 INFO    Thread-4  :3255562 [wandb_run.py:_finish():1970] finishing run seu_ml/DF_wtf_pad_CW/2pgl3520
+2024-05-14 06:55:47,094 INFO    Thread-4  :3255562 [wandb_run.py:_atexit_cleanup():2210] got exitcode: 1
+2024-05-14 06:55:47,094 INFO    Thread-4  :3255562 [wandb_run.py:_restore():2193] restore
+2024-05-14 06:55:47,094 INFO    Thread-4  :3255562 [wandb_run.py:_restore():2199] restore done
+2024-05-14 06:55:54,178 WARNING MsgRouterThr:3255562 [router.py:message_loop():77] message_loop has been closed
+2024-05-14 06:55:58,097 INFO    Thread-4  :3255562 [wandb_run.py:_restore():2193] restore
+2024-05-14 06:55:58,097 INFO    Thread-4  :3255562 [wandb_run.py:_restore():2199] restore done
+2024-05-14 06:56:08,108 INFO    Thread-5  :3255562 [wandb_watch.py:watch():51] Watching
+2024-05-14 06:56:08,109 INFO    Thread-5  :3255562 [wandb_run.py:_finish():1970] finishing run seu_ml/DF_wtf_pad_CW/2pgl3520
+2024-05-14 06:56:08,911 INFO    Thread-6  :3255562 [wandb_watch.py:watch():51] Watching
+2024-05-14 06:56:08,912 INFO    Thread-6  :3255562 [wandb_run.py:_finish():1970] finishing run seu_ml/DF_wtf_pad_CW/2pgl3520

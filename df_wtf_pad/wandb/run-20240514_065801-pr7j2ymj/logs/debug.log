@@ -1,0 +1,29 @@
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Current SDK version is 0.16.4
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Configure stats pid to 3256904
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Loading settings from /home/xjj/.config/wandb/settings
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Loading settings from /home/xjj/projects/graduate_project/df_wtf_pad/wandb/settings
+2024-05-14 06:58:01,666 WARNING MainThread:3256904 [wandb_setup.py:_flush():76] Unknown environment variable: WANDB_SERVICE
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'entity': 'seu_ml', 'project': 'DF_wtf_pad_CW', 'sweep_id': 's56s3214', 'root_dir': '/home/xjj/projects/graduate_project/df_wtf_pad', 'run_id': 'pr7j2ymj', 'sweep_param_path': '/home/xjj/projects/graduate_project/df_wtf_pad/wandb/sweep-s56s3214/config-pr7j2ymj.yaml'}
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-05-14 06:58:01,666 INFO    MainThread:3256904 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'df_wtf_pad/wtf_pad_close_world_train.py', 'program_abspath': '/home/xjj/projects/graduate_project/df_wtf_pad/wtf_pad_close_world_train.py', 'program': 'wtf_pad_close_world_train.py'}
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:_log_setup():526] Logging user logs to /home/xjj/projects/graduate_project/df_wtf_pad/wandb/run-20240514_065801-pr7j2ymj/logs/debug.log
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:_log_setup():527] Logging internal logs to /home/xjj/projects/graduate_project/df_wtf_pad/wandb/run-20240514_065801-pr7j2ymj/logs/debug-internal.log
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:init():566] calling init triggers
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:init():573] wandb.init called with sweep_config: {'batch_size': 128, 'betas': '0.999)', 'eps': 1e-08, 'lr': 0.008, 'num_epochs': 20, 'optimizer': 'adamax', 'weight_decay': 0}
+config: {}
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:init():616] starting backend
+2024-05-14 06:58:01,667 INFO    MainThread:3256904 [wandb_init.py:init():620] setting up manager
+2024-05-14 06:58:01,671 INFO    MainThread:3256904 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-05-14 06:58:01,672 INFO    MainThread:3256904 [wandb_init.py:init():628] backend started and connected
+2024-05-14 06:58:01,679 INFO    MainThread:3256904 [wandb_run.py:_config_callback():1343] config_cb None None {'batch_size': 128, 'betas': '0.999)', 'eps': 1e-08, 'lr': 0.008, 'num_epochs': 20, 'optimizer': 'adamax', 'weight_decay': 0}
+2024-05-14 06:58:01,681 INFO    MainThread:3256904 [wandb_init.py:init():720] updated telemetry
+2024-05-14 06:58:01,737 INFO    MainThread:3256904 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2024-05-14 06:58:03,703 INFO    MainThread:3256904 [wandb_run.py:_on_init():2262] communicating current version
+2024-05-14 06:58:03,983 INFO    MainThread:3256904 [wandb_run.py:_on_init():2271] got version response upgrade_message: "wandb version 0.17.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2024-05-14 06:58:03,983 INFO    MainThread:3256904 [wandb_init.py:init():804] starting run threads in backend
+2024-05-14 06:58:06,256 INFO    MainThread:3256904 [wandb_run.py:_console_start():2241] atexit reg
+2024-05-14 06:58:06,256 INFO    MainThread:3256904 [wandb_run.py:_redirect():2096] redirect: wrap_raw
+2024-05-14 06:58:06,256 INFO    MainThread:3256904 [wandb_run.py:_redirect():2161] Wrapping output streams.
+2024-05-14 06:58:06,257 INFO    MainThread:3256904 [wandb_run.py:_redirect():2186] Redirects installed.
+2024-05-14 06:58:06,257 INFO    MainThread:3256904 [wandb_init.py:init():847] run started, returning control to user process

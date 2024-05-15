@@ -1,0 +1,16 @@
+wandb_version: 1
+
+batch_size:
+  value: 48
+betas:
+  value: 0.999)
+eps:
+  value: 1.0e-08
+lr:
+  value: 0.005
+num_epochs:
+  value: 50
+optimizer:
+  value: adamax
+weight_decay:
+  value: 0

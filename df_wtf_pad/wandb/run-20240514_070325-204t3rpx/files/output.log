@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/site-packages/wandb/sdk/wandb_config.py", line 162, in __getattr__
+    return self.__getitem__(key)
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/site-packages/wandb/sdk/wandb_config.py", line 130, in __getitem__
+    return self._items[key]
+KeyError: 'write'
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "wtf_pad_close_world_train.py", line 234, in <module>
+    pprint("config: ", config)
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/pprint.py", line 53, in pprint
+    printer.pprint(object)
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/pprint.py", line 148, in pprint
+    self._format(object, self._stream, 0, 0, {}, 0)
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/pprint.py", line 185, in _format
+    stream.write(rep)
+  File "/home/xjj/miniconda3/envs/python-3.8/lib/python3.8/site-packages/wandb/sdk/wandb_config.py", line 164, in __getattr__
+    raise AttributeError(
+AttributeError: <class 'wandb.sdk.wandb_config.Config'> object has no attribute 'write'

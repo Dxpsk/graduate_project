@@ -1,0 +1,31 @@
+program: wtf_pad_close_world_train.py
+method: random
+metric:
+  name: test_acc
+  goal: maximize
+name: sweep
+project: DF_wtf_pad_CW
+parameters:
+  batch_size:
+    distribution: q_uniform
+    max: 256
+    min: 16
+    q: 16
+  lr:
+    distribution: q_uniform
+    max: 0.01
+    min: 0.001
+    q: 0.001
+  num_epochs:
+    values: [10, 20, 30, 40, 50]
+  optimizer:
+    values: ["sgd", "adam", "adamax"]
+  eps:
+    values: [1e-8]
+  weight_decay:
+    values: [0]
+  betas1:
+    values: [0.9]
+  betas2:
+    values: [0.99]
+

@@ -1,0 +1,10 @@
+wandb_version: 1
+
+batch_size:
+  value: 80
+lr:
+  value: 0.005
+num_epochs:
+  value: 40
+optimizer:
+  value: adamax

@@ -1,0 +1,10 @@
+wandb_version: 1
+
+batch_size:
+  value: 240
+lr:
+  value: 0.006
+num_epochs:
+  value: 50
+optimizer:
+  value: sgd

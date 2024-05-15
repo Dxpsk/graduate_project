@@ -12,7 +12,7 @@ import wandb
 import d2l.torch as d2l
 
 
-EPOCH = 30
+EPOCH = 10
 BATCH_SIZE = 200
 LR = 0.0005
 if_use_gpu = 1

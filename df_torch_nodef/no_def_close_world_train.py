@@ -94,7 +94,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, device, betas, eps, weigh
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
             nn.init.xavier_uniform_(m.weight)
     net.apply(init_weights)
-    wandb.watch(net)
+    # wandb.watch(net)
     optimizer = torch.optim.Adamax(net.parameters(), lr, betas, eps, weight_decay)
     for epoch in range(num_epochs):
         net.train() #将net设置为训练模式
@@ -131,45 +131,54 @@ def train(net, train_iter, valid_iter, num_epochs, lr, device, betas, eps, weigh
                 loss = criterion(pred, y)
             loss_record.append(loss.item())
         valid_l = sum(loss_record)/len(loss_record)
-        wandb.log({'train_loss':train_l ,'train_acc':train_acc ,'valid_loss':valid_l,'valid_acc':valid_acc}, step=epoch+1)
+        # wandb.log({'train_loss':train_l ,'train_acc':train_acc ,'valid_loss':valid_l,'valid_acc':valid_acc}, step=epoch+1)
 
         if valid_l < best_loss:
             best_loss = valid_l
             torch.save(net.state_dict(), '/home/xjj/projects/graduate_project/df_torch_nodef/no_def_cw_model') # Save your best model
             print('Saving model with loss {:.3f}...'.format(best_loss))
-    wandb.finish()
+    # wandb.finish()
     return train_l, train_acc, valid_l, valid_acc
 
 # %%
 device = torch.device(f'cuda:{4}')
-wandb.init(project='DF_no_def_CW',
-           name='1st_run',
-           config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 30,
-                   'eps': 1e-08, 'weight_decay': 0,
-                   'betas':(0.9, 0.999)})
-train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
-model = make_model(95)
-model = model.to(device)
-train(model, train_iter, valid_iter, wandb.config['num_epochs'], 
-      wandb.config['lr'], device, wandb.config['betas'], wandb.config['eps'], wandb.config['weight_decay'])
+# wandb.init(project='DF_no_def_CW',
+#            name='1st_run',
+#            config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 30,
+#                    'eps': 1e-08, 'weight_decay': 0,
+#                    'betas':(0.9, 0.999)})
+num_epoch=[10, 20, 30, 40, 50]
+batch_size = 128
+lr = 0.002
+eps = 1e-08
+weight_decay = 0
+betas =(0.9, 0.999)
+l=[[],[]]
+for i in range(len(num_epoch)):
+    train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
+    model = make_model(95)
+    model = model.to(device)
+    list1=train(model, train_iter, valid_iter, num_epoch[i], 
+        lr, device, betas, eps, weight_decay)
+    l[0].append(list1[1])
 
-
-#还要对x_test做一下推理
-test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
-net = make_model(95)
-state_dict = torch.load('/home/xjj/projects/graduate_project/df_torch_nodef/no_def_cw_model')
-net.load_state_dict(state_dict)
-loss_record = []
-accuracy_record = []
-net.to(device)
-for x, y in valid_iter:
-    x, y = x.to(device), y.to(device)
-    with torch.no_grad():
-        pred = net(x)
-        loss = criterion(pred, y)
-    loss_record.append(loss.item())
-test_l = sum(loss_record)/len(loss_record)
-test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
-print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
-
+    #还要对x_test做一下推理
+    test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
+    net = make_model(95)
+    state_dict = torch.load('/home/xjj/projects/graduate_project/df_torch_nodef/no_def_cw_model')
+    net.load_state_dict(state_dict)
+    loss_record = []
+    accuracy_record = []
+    net.to(device)
+    for x, y in valid_iter:
+        x, y = x.to(device), y.to(device)
+        with torch.no_grad():
+            pred = net(x)
+            loss = criterion(pred, y)
+        loss_record.append(loss.item())
+    test_l = sum(loss_record)/len(loss_record)
+    test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
+    print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
+    l[1].append(test_acc)
+print(l)
 #test_acc:  0.9838947368421053     test_loss:  0.13146244606624047

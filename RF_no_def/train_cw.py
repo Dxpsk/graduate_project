@@ -1,3 +1,4 @@
+import csv
 import numpy as np
 from sklearn import metrics
 import torch
@@ -10,9 +11,9 @@ from models.RF import getRF
 import const_rf as const
 import wandb
 import d2l.torch as d2l
+import pre_recall as pre_recall
 
-
-EPOCH = 30
+EPOCH = [10, 20, 30, 40, 50]
 BATCH_SIZE = 200
 LR = 0.0005
 if_use_gpu = 1
@@ -26,11 +27,16 @@ def load_data(fpath):
     return train_X, train_y
 
 
-def adjust_learning_rate(optimizer, echo):
-    lr = LR * (0.2 ** (echo / EPOCH))
+def adjust_learning_rate(optimizer, echo, num_epcohs):
+    lr = LR * (0.2 ** (echo / num_epcohs))
     for para_group in optimizer.param_groups:
         para_group['lr'] = lr
 
+def load_model(class_num, path, device):
+    model = getRF(class_num)
+    model.load_state_dict(torch.load(path))
+    model = model.to(device)
+    return model
 
 
 def load(feature_file):
@@ -51,11 +57,11 @@ def train(net, train_iter, num_epochs, lr, device):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
             nn.init.xavier_uniform_(m.weight)
     net.apply(init_weights)
-    wandb.watch(net)
+    # wandb.watch(net)
     optimizer = torch.optim.Adam(net.parameters(), lr, weight_decay=0.001)
     net.train() #将net设置为训练模式
     for epoch in range(num_epochs):
-        adjust_learning_rate(optimizer, epoch)
+        adjust_learning_rate(optimizer, epoch, num_epochs)
         train_pbar = tqdm.tqdm(train_iter, position=0, leave=True)
         metric = d2l.Accumulator(3)
         for x, y in train_pbar:
@@ -76,26 +82,60 @@ def train(net, train_iter, num_epochs, lr, device):
                 metric.add(loss *x.shape[0], d2l.accuracy(outputs, y), x.shape[0])  #累加每个batch的准确率
         train_l = metric[0] / metric[2]
         train_acc = metric[1] / metric[2]  #一个epoch的平均loss,和对训练集的预测准确率
-        wandb.log({'train_loss':train_l ,'train_acc':train_acc}, step=epoch+1)
+        # wandb.log({'train_loss':train_l ,'train_acc':train_acc}, step=epoch+1)
         
     torch.save(net.state_dict(), '/home/xjj/projects/graduate_project/RF_no_def/model_cw') # Save your best model
     print('Saving model with loss {:.3f}...'.format(loss))
-    wandb.finish()
+    # wandb.finish()
     return train_l, train_acc
+
+
+def test():
+    test_dataset = ['/data/Deep_fingerprint/processed_RF_data/Undefence-test.npy']
+    device = torch.device('cuda:5')
+    # TODO: change the trained model path
+    defense_model = load_model(const.num_classes, '/home/xjj/projects/graduate_project/RF_no_def/model_cw', device).eval()
+
+    for i, path in enumerate(test_dataset):
+        features, test_y = load_data(path)
+
+        test_x = torch.unsqueeze(torch.from_numpy(features), dim=1).type(torch.FloatTensor)
+        test_x = test_x.to(device)
+        test_y = torch.squeeze(torch.from_numpy(test_y)).type(torch.LongTensor)
+        test_data = Data.TensorDataset(test_x, test_y)
+        test_loader = Data.DataLoader(dataset=test_data, batch_size=1, shuffle=False)
+        website_res = []
+        with torch.no_grad():
+            for v, (x, y) in enumerate(test_loader):
+                defense_output = defense_model(x).cpu().squeeze().detach().numpy()
+                pre = np.argmax(defense_output)
+                website_res.append([y.item(), pre])
+
+        # You can find the test result in 'result/'
+        cur_website_path = '/home/xjj/projects/graduate_project/RF_no_def/result/no_def_cw.csv'
+        with open(cur_website_path, 'w+', encoding='utf-8', newline='') as f:
+            writer = csv.writer(f)
+            for item in website_res:
+                writer.writerow(item)
+
+        acc = pre_recall.pre_recCall(cur_website_path, '/home/xjj/projects/graduate_project/RF_no_def/result/no_def_cw_evaluate.csv', const.num_classes)
+        print('avg acc:' + str(acc))
+        return acc
 
 
 if __name__ == '__main__':
     # TODO: change the data file path
     device = torch.device(f'cuda:{6}')
-    wandb.init(project='RF_no_def',
-               name='1st_run',
-               config={'learning_rate': LR,
-                       'batch_size': BATCH_SIZE,
-                       'epoch': EPOCH,
-                       'num_classes': num_classes})
-    defense = 'Undefence'
-    feature_file = '/data/Deep_fingerprint/processed_RF_data/' + defense + '-' +'train' + '.npy'
-    method = defense
-    net, train_iter = load(feature_file)
-    net.to(device)
-    train(net, train_iter, wandb.config.epoch, wandb.config.learning_rate, device)
+    l=[[],[]]
+    for i in range(len(EPOCH)):
+        epoch=EPOCH[i]
+        defense = 'Undefence'
+        feature_file = '/data/Deep_fingerprint/processed_RF_data/' + defense + '-' +'train' + '.npy'
+        method = defense
+        net, train_iter = load(feature_file)
+        net.to(device)
+        train_loss, train_acc=train(net, train_iter, epoch, LR, device)
+        test_acc=test()
+        l[0].append(train_acc)
+        l[1].append(test_acc)
+        print(l)

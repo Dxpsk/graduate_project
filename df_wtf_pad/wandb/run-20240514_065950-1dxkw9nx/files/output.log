@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "wtf_pad_close_world_train.py", line 234, in <module>
+    pprint("config queshishi: ", config)
+TypeError: 'module' object is not callable

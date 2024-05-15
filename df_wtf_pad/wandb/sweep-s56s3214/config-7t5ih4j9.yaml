@@ -1,0 +1,16 @@
+wandb_version: 1
+
+batch_size:
+  value: 192
+betas:
+  value: (0.9
+eps:
+  value: 1.0e-08
+lr:
+  value: 0.006
+num_epochs:
+  value: 20
+optimizer:
+  value: sgd
+weight_decay:
+  value: 0

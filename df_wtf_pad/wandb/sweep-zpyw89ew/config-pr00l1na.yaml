@@ -1,0 +1,15 @@
+wandb_version: 1
+
+batch_size:
+  value: 112
+lr:
+  value: 0.001
+num_epochs:
+  value: 20
+optimizer:
+  value:
+  - sgd
+  - adam
+  - adamax
+weight_decay:
+  value: 0

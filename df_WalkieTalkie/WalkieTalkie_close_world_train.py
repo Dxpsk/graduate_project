@@ -9,6 +9,7 @@ import tqdm
 import d2l.torch as d2l
 import math
 from model import make_model
+from torchvision.models import resnet50, ResNet50_Weights
 
 # %%
 criterion = nn.CrossEntropyLoss()
@@ -141,14 +142,15 @@ def train(net, train_iter, valid_iter, num_epochs, lr, device, betas, eps, weigh
     return train_l, train_acc, valid_l, valid_acc
 
 # %%
-device = torch.device(f'cuda:{5}')
+device = torch.device(f'cuda:{3}')
 wandb.init(project='DF_WalkieTalkie_CW',
            name='1st_run',
            config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 30,
                    'eps': 1e-08, 'weight_decay': 0,
                    'betas':(0.9, 0.999)})
 train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
-model = make_model(100)
+# model = make_model(100)
+model = resnet50(pretrained=True)
 model = model.to(device)
 train(model, train_iter, valid_iter, wandb.config['num_epochs'], 
       wandb.config['lr'], device, wandb.config['betas'], wandb.config['eps'], wandb.config['weight_decay'])
@@ -171,5 +173,3 @@ for x, y in valid_iter:
 test_l = sum(loss_record)/len(loss_record)
 test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
 print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
-
-#test_acc:  0.9838947368421053     test_loss:  0.13146244606624047
