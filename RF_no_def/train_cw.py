@@ -12,8 +12,12 @@ import const_rf as const
 import wandb
 import d2l.torch as d2l
 import pre_recall as pre_recall
+import time
 
-EPOCH = [10, 20, 30, 40, 50]
+# 开始计时
+start_time = time.time()
+
+EPOCH = 30
 BATCH_SIZE = 200
 LR = 0.0005
 if_use_gpu = 1
@@ -48,6 +52,10 @@ def load(feature_file):
     train_y = torch.from_numpy(y).type(torch.LongTensor)
 
     train_data = Data.TensorDataset(train_x, train_y)
+    
+    # train_len = int(len(train_data))
+    # remaining_len = len(train_data) - train_len
+    # train_dataset_sub, _ = Data.random_split(train_data, [train_len, remaining_len])
     train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
     return cnn, train_loader
 
@@ -126,16 +134,16 @@ def test():
 if __name__ == '__main__':
     # TODO: change the data file path
     device = torch.device(f'cuda:{6}')
-    l=[[],[]]
-    for i in range(len(EPOCH)):
-        epoch=EPOCH[i]
-        defense = 'Undefence'
-        feature_file = '/data/Deep_fingerprint/processed_RF_data/' + defense + '-' +'train' + '.npy'
-        method = defense
-        net, train_iter = load(feature_file)
-        net.to(device)
-        train_loss, train_acc=train(net, train_iter, epoch, LR, device)
-        test_acc=test()
-        l[0].append(train_acc)
-        l[1].append(test_acc)
-        print(l)
+    epoch=EPOCH
+    defense = 'Undefence'
+    feature_file = '/data/Deep_fingerprint/processed_RF_data/' + defense + '-' +'train' + '.npy'
+    method = defense
+
+    net, train_iter = load(feature_file)
+    net.to(device)
+    train_loss, train_acc=train(net, train_iter, epoch, LR, device)
+    end_time = time.time()
+    test_acc=test()
+    
+    elapsed_time = end_time - start_time
+    print(f"程序运行时间: {elapsed_time} 秒")

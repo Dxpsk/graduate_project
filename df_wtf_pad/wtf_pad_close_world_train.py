@@ -101,15 +101,15 @@ def choose_model(model, optimizer, learning_rate, betas=(0.9, 0.999), eps=1e-08)
 
 train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
 # %%
-def train(config):
+def train(net, train_iter, valid_iter, num_epochs, lr, device, betas, eps, weight_decay):
     net=make_model(95).to(device)
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
             nn.init.xavier_uniform_(m.weight)
     net.apply(init_weights)
     wandb.watch(net)
-    optimizer = choose_model(net, config.optimizer, config.lr)
-    for epoch in range(config.num_epochs):
+    optimizer = choose_model(net, 'adam', lr, betas, eps)
+    for epoch in range(num_epochs):
         net.train() #将net设置为训练模式
         train_pbar = tqdm.tqdm(train_iter, position=0, leave=True)
         metric = d2l.Accumulator(3)
@@ -124,7 +124,7 @@ def train(config):
             optimizer.step()
 
             # Display current epoch number and loss on tqdm progress bar.
-            train_pbar.set_description(f'Epoch [{epoch+1}/{config.num_epochs}]')
+            train_pbar.set_description(f'Epoch [{epoch+1}/{num_epochs}]')
             train_pbar.set_postfix({'loss': loss.detach().item()})
             #这里随着每个batch显示的是这个batch的平均损失
 
@@ -172,62 +172,38 @@ def train(config):
 
 # %%
 
-# wandb.init(project='DF_wtf_pad_CW',
-#            name='1st_run',
-#            config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 30,
-#                    'eps': 1e-08, 'weight_decay': 0,
-#                    'betas':(0.9, 0.999)})
-# model = make_model(95)
-# model = model.to(device)
-# train(model, train_iter, valid_iter, wandb.config['num_epochs'], 
-#       wandb.config['lr'], device, wandb.config['betas'], wandb.config['eps'], wandb.config['weight_decay'])
+wandb.init(project='DF_wtf_pad_CW',
+           name='1st_run',
+           config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 50,
+                   'eps': 1e-08, 'weight_decay': 0,
+                   'betas':(0.9, 0.999)})
+model = make_model(95)
+model = model.to(device)
+train(model, train_iter, valid_iter, wandb.config['num_epochs'], 
+      wandb.config['lr'], device, wandb.config['betas'], wandb.config['eps'], wandb.config['weight_decay'])
 
 
-# #还要对x_test做一下推理
-# test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
-# net = make_model(95)
-# state_dict = torch.load('/home/xjj/projects/graduate_project/df_wtf_pad/wtf_pad_cw_model')
-# net.load_state_dict(state_dict)
-# loss_record = []
-# accuracy_record = []
-# net.to(device)
-# for x, y in valid_iter:
-#     x, y = x.to(device), y.to(device)
-#     with torch.no_grad():
-#         pred = net(x)
-#         loss = criterion(pred, y)
-#     loss_record.append(loss.item())
-# test_l = sum(loss_record)/len(loss_record)
-# test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
-# print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
+#还要对x_test做一下推理
+test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
+net = make_model(95)
+state_dict = torch.load('/home/xjj/projects/graduate_project/df_wtf_pad/wtf_pad_cw_model')
+net.load_state_dict(state_dict)
+loss_record = []
+accuracy_record = []
+net.to(device)
+for x, y in valid_iter:
+    x, y = x.to(device), y.to(device)
+    with torch.no_grad():
+        pred = net(x)
+        loss = criterion(pred, y)
+    loss_record.append(loss.item())
+test_l = sum(loss_record)/len(loss_record)
+test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
+print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
 
-#test_acc:  0.9838947368421053     test_loss:  0.13146244606624047
-
-# sweep_config = {"method": "random",
-#                 "name": "sweep",
-#                 "parameters": {
-#                     "batch_size": {"distribution": "q_uniform",
-#                                    "max": 256,
-#                                    "min": 16,
-#                                    "q": 16},
-#                     "lr": {"distribution": "q_uniform",
-#                                    "max": 0.01,
-#                                    "min": 0.001,
-#                                    "q": 0.001},
-#                     "num_epochs": {"values": [10, 20, 30, 40, 50]},
-#                     #"eps": {"values": [1e-08]},
-#                     "weight_decay": {"values": [0]},
-#                     # "betas": {"values": [(0.9, 0.999)]},
-#                     "optimizer":{"value":["sgd", "adam", "adamax", ]}
-#                 }
-#                 }
-# wandb.login()
-# sweep_id = wandb.sweep(sweep_config, project='DF_wtf_pad_CW')
-# wandb.init()
-
-# wandb.agent(sweep_id, train)
-
-
-wandb.init()
-config = wandb.config
-train(config)
+# wandb:   test_acc 0.86947
+# wandb:  test_loss 11.54371
+# wandb:  train_acc 0.92807
+# wandb: train_loss 0.24853
+# wandb:  valid_acc 0.906
+# wandb: valid_loss 0.38328

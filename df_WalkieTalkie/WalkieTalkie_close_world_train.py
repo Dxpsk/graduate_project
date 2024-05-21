@@ -149,9 +149,7 @@ wandb.init(project='DF_WalkieTalkie_CW',
                    'eps': 1e-08, 'weight_decay': 0,
                    'betas':(0.9, 0.999)})
 train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
-# model = make_model(100)
-model = resnet50(pretrained=True)
-model = model.to(device)
+model = make_model(100).to(device)
 train(model, train_iter, valid_iter, wandb.config['num_epochs'], 
       wandb.config['lr'], device, wandb.config['betas'], wandb.config['eps'], wandb.config['weight_decay'])
 

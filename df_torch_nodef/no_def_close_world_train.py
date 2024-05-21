@@ -4,12 +4,14 @@ import pickle
 import numpy as np
 from torch import nn 
 import numpy as np
+from  torch.utils import data
 import wandb
 import tqdm
 import d2l.torch as d2l
 import math
 from model import make_model
-
+import time
+start_time = time.time()
 # %%
 criterion = nn.CrossEntropyLoss()
 
@@ -147,38 +149,44 @@ device = torch.device(f'cuda:{4}')
 #            config={'batch_size': 128, 'lr': 0.002, 'num_epochs': 30,
 #                    'eps': 1e-08, 'weight_decay': 0,
 #                    'betas':(0.9, 0.999)})
-num_epoch=[10, 20, 30, 40, 50]
+num_epoch= 30
 batch_size = 128
 lr = 0.002
 eps = 1e-08
 weight_decay = 0
 betas =(0.9, 0.999)
-l=[[],[]]
-for i in range(len(num_epoch)):
-    train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
-    model = make_model(95)
-    model = model.to(device)
-    list1=train(model, train_iter, valid_iter, num_epoch[i], 
-        lr, device, betas, eps, weight_decay)
-    l[0].append(list1[1])
 
-    #还要对x_test做一下推理
-    test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
-    net = make_model(95)
-    state_dict = torch.load('/home/xjj/projects/graduate_project/df_torch_nodef/no_def_cw_model')
-    net.load_state_dict(state_dict)
-    loss_record = []
-    accuracy_record = []
-    net.to(device)
-    for x, y in valid_iter:
-        x, y = x.to(device), y.to(device)
-        with torch.no_grad():
-            pred = net(x)
-            loss = criterion(pred, y)
-        loss_record.append(loss.item())
-    test_l = sum(loss_record)/len(loss_record)
-    test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
-    print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
-    l[1].append(test_acc)
-print(l)
+# train_iter, valid_iter = d2l.load_array((X_train, y_train), batch_size=128), d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
+train_dataset = data.TensorDataset(X_train, y_train)
+# train_len = int(len(train_dataset) * list1[i])
+# remaining_len = len(train_dataset) - train_len
+# train_dataset_sub, _ = data.random_split(train_dataset, [train_len, remaining_len])
+valid_iter = d2l.load_array((X_valid, y_valid), batch_size=128, is_train=False)
+train_iter = data.DataLoader(train_dataset, batch_size=128, shuffle=True)
+model = make_model(95)
+model = model.to(device)
+result=train(model, train_iter, valid_iter, num_epoch, 
+    lr, device, betas, eps, weight_decay)
+end_time = time.time()
+
+#还要对x_test做一下推理
+test_iter = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(X_test, y_test), batch_size=128, shuffle=False)
+net = make_model(95)
+state_dict = torch.load('/home/xjj/projects/graduate_project/df_torch_nodef/no_def_cw_model')
+net.load_state_dict(state_dict)
+loss_record = []
+accuracy_record = []
+net.to(device)
+for x, y in valid_iter:
+    x, y = x.to(device), y.to(device)
+    with torch.no_grad():
+        pred = net(x)
+        loss = criterion(pred, y)
+    loss_record.append(loss.item())
+test_l = sum(loss_record)/len(loss_record)
+test_acc = d2l.evaluate_accuracy_gpu(net, test_iter)
+print('test_acc: ', test_acc,'   ', 'test_loss: ', test_l)
+
+elapsed_time = end_time - start_time
+print(f"程序运行时间: {elapsed_time} 秒")
 #test_acc:  0.9838947368421053     test_loss:  0.13146244606624047
